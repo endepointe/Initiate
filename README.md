@@ -1,10 +1,3 @@
-Important --  do not merge your local branch into the master
-branch without submitting a pull request for the users of 
-group to review. This will ensure that the code works and
-is to each members standards.
-
------------------------------------------------------------
-
 Create a voting app.
 
 The app will be able to allow a pool of registered 
