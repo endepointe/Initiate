@@ -1,4 +1,4 @@
-Create a voting app.
+Create a voting app. Teamwork makes the dream work.
 
 The app will be able to allow a pool of registered 
 users the ability to vote on a subject.Voting would 
