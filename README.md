@@ -35,13 +35,6 @@ then be cut-off at a specific time.
 			after authentication.
 
 -----------------------------------------------------------
-
-It will be important to not push to the master branch until 
-the code has been reviewed by everyone in the group to make 
-sure that it works. To make a branch on your local machine, 
-use the git branch and git checkout commands. If you need 
-help, just ask.
-
 -----------------------------------------------------------
 
 
