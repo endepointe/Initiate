@@ -1,8 +1,9 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const mongoose = require('mongoose');
 const path = require('path');
-const port = process.env.port || 3001;
+const port = process.env.port || 4001;
 const auth = require('./routes/auth');
 // voting route
 const voteRoute = require('./routes/vote');
@@ -19,11 +20,11 @@ mongoose.connect(process.env.DB_CONNECT,
   () => console.log('connected to mongoose'),
 );
 
+app.use(cors());
 app.use(express.json());
 
 // middelware
 app.use('/api/user', auth);
-// This is intended as a task after assignment is complete
 app.use('/api/vote', voteRoute);
 
 // PRODUCTION //

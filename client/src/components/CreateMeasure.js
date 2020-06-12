@@ -15,15 +15,15 @@ import './CreateMeasure.css';
 // Go to step 6, found in client/../../Measure.js
 
 const CreateMeasure = (props) => {
-//Figuring out how to clear text input w/o state
-//www.seanbehan.com/how-to-reset-and-clear-form-fields-and-textareas-with-react-stateless-components/
-  let form = { }
+  //Figuring out how to clear text input w/o state
+  //www.seanbehan.com/how-to-reset-and-clear-form-fields-and-textareas-with-react-stateless-components/
+  let form = {}
   const update = (e) => {
     form[e.target.name] = e.target
   }
 
   const submitProposal = (e) => {
-    
+
     e.preventDefault();
     const name = e.target.elements.name.value;
     const desc = e.target.elements.description.value;
@@ -31,7 +31,7 @@ const CreateMeasure = (props) => {
     console.log(`id in create: ${props.userId}`);
 
     const tokenReq = axios.create({
-      baseURL: 'http://localhost:3000/',
+      baseURL: 'http://localhost:4001/',
       headers: {
         'auth-token': props.token,
       },
@@ -74,7 +74,7 @@ const CreateMeasure = (props) => {
                   <label className="formText">Name</label>
                 </div>
                 <div className="colRight">
-                  <input name="name" type="text" className="userInput" placeholder="Your measure name..." onChange={update}/>
+                  <input name="name" type="text" className="userInput" placeholder="Your measure name..." onChange={update} />
                 </div>
               </div>
               <div className="row">
@@ -92,7 +92,7 @@ const CreateMeasure = (props) => {
       </div>
     </>
   );
-  
+
 }
 
 
