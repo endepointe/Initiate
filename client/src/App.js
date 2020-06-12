@@ -7,9 +7,10 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
+import { Container } from '@material-ui/core';
 import VotingPage from './components/VotingPage';
 import Home from './components/Home';
-import './App.css';
+//import './App.css';
 
 const App = () => {
 
@@ -22,9 +23,6 @@ const App = () => {
     console.log(`auth stat: ${authStatus}`);
   }, [authStatus]);
 
-  // Main controller that enables the Login and 
-  // Register components to pass data/state up to the 
-  // parent components (App, Home, VotingPage)
   const handleAuth = (id, user, token, status) => {
     console.log(`
     From App {\n
@@ -39,11 +37,6 @@ const App = () => {
     setToken(token);
   }
 
-  // 1)
-  // Until the user provides credentials,
-  // the Home component is rendered.
-  //
-  // go to step 2, located in Home.js
   return (
     <div className="backDrop">
       <Switch>
@@ -68,7 +61,6 @@ const App = () => {
               auth={authStatus} />
           )}>
         </Route>
-        {user}
       </Switch>
     </div>
   );

@@ -2,32 +2,16 @@ import React,
 {
   useState,
 } from 'react';
-import './Home.css';
+// import './Home.css';
 import Register from './Register';
 import Login from './Login';
 
 const Home = (props) => {
 
   const [login, selectLogin] = useState(true);
-  // 2)
-  // Similar to how handAuth works, this function
-  // acts as a median for the transport of data
-  // to both the Login and Register components.
-  // This is given the four parameters that are 
-  // relayed up the prop chain via using 
-  // handleAuth.
-  // Using Redux would be another solution that 
-  // I did not want to implement for the sake of
-  // time.
+
   const handleLogin = (id, user, token, status) => {
 
-    // With the passed in controller function from
-    // App, the Login and Register components can 
-    // obtain and relay the login/register credentials
-    // up the data/state pipeline.
-    //
-    // Go to step 3, parts a and b, located in 
-    // Login and Register, respectively.
     props.handleAuth(id, user, token, status);
     props.history.push('/voting/about');
   }

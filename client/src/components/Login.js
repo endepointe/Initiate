@@ -2,27 +2,12 @@ import React,
 {
   useState,
 } from 'react';
-import './Login.css';
+//import './Login.css';
 import axios from 'axios';
 
 const Login = (props) => {
 
-  // not setting after post
-  // probably wont use them in this size of app
-  //const [token, setToken] = useState('');
   const [invalid, invalidCredentials] = useState(false);
-  //const [status, setStatus] = useState(0);
-  //const [user, setUserName] = useState('');
-
-  // 3a)
-  // Again, another controller function that handles the 
-  // transport of state data. A request is sent to the 
-  // server, authenticating the user with a JWT. Once a 
-  // response is provided to the user, the data/state is 
-  // passed up the prop pipeline, resulting in the 
-  // VotingPage to be rendered to the DOM.
-  //
-  // Go to part 4, located in VotingPage.js
 
   const handleSubmit = (e) => {
 
@@ -40,9 +25,6 @@ const Login = (props) => {
         console.log(`_id: ${response.data._id}`);
         console.log(`email: ${response.data.email}`);
         if (response.status === 200) {
-          //setStatus(response.status);
-          //setToken(response.headers['auth-token']);
-          //setUserName(response.data.name);
           props.handleLogin(
             response.data._id,
             response.data.name,

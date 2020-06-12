@@ -1,22 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import './CreateMeasure.css';
-
-// 5a)
-// First, to locate where the data is flowing,
-// look at the api call.
-// The token, created and issued after login,
-// is passed to the protected route, /api/vote. 
-// This will be the solution for the registration
-// path, just haven't added that code.
-// Once a measure is created, it is available
-// in the ViewMeasures component.
-// 
-// Go to step 6, found in client/../../Measure.js
+//import './CreateMeasure.css';
 
 const CreateMeasure = (props) => {
-  //Figuring out how to clear text input w/o state
-  //www.seanbehan.com/how-to-reset-and-clear-form-fields-and-textareas-with-react-stateless-components/
   let form = {}
   const update = (e) => {
     form[e.target.name] = e.target
@@ -94,6 +80,5 @@ const CreateMeasure = (props) => {
   );
 
 }
-
 
 export default CreateMeasure;

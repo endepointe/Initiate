@@ -2,26 +2,8 @@ import React,
 {
   useState,
 } from 'react';
-import './Login.css';
+//import './Login.css';
 import axios from 'axios';
-
-
-// 3b)
-// Again, another controller function that handles the 
-// transport of state data. A request is sent to the 
-// server, authenticating the user with a JWT. Once a 
-// response is provided to the user, the data/state is 
-// passed up the prop pipeline, resulting in the 
-// VotingPage to be rendered to the DOM.
-//
-// I believe we discussed the issues that still exist 
-// with this component after a user registers. Any 
-// additional issues can be place in this comment 
-// section.
-//
-// Issues:
-//
-// Go to part 4, located in VotingPage.js
 
 const Register = (props) => {
 
@@ -88,28 +70,28 @@ const Register = (props) => {
             <div>
               <label htmlFor="name"></label>
               <input
-                placeholder="Your name" //required
+                placeholder="Your name" required
                 name="username"
                 type="text" />
             </div>
             <div>
               <label htmlFor="email"></label>
               <input
-                placeholder="Your email" //required
+                placeholder="Your email" required
                 name="useremail"
                 type="email" />
             </div>
             <div>
               <label htmlFor="password"></label>
               <input
-                placeholder="Password" //required
+                placeholder="Password" required
                 name="password"
                 type="password" />
             </div>
             <div>
               <label htmlFor="verifypassword"></label>
               <input
-                placeholder="Verify Password" //required
+                placeholder="Verify Password" required
                 name="verifypassword"
                 type="password" />
             </div>
