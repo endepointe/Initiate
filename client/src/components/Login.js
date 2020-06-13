@@ -4,8 +4,33 @@ import React,
 } from 'react';
 //import './Login.css';
 import axios from 'axios';
+import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  form: {
+    width: '100%',
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  }
+}));
 
 const Login = (props) => {
+
+  const classes = useStyles();
 
   const [invalid, invalidCredentials] = useState(false);
 
@@ -21,9 +46,6 @@ const Login = (props) => {
       password: password
     })
       .then((response) => {
-        console.log(`name: ${response.data.name}`);
-        console.log(`_id: ${response.data._id}`);
-        console.log(`email: ${response.data.email}`);
         if (response.status === 200) {
           props.handleLogin(
             response.data._id,
@@ -45,41 +67,52 @@ const Login = (props) => {
   }
 
   return (
-    <>
-      <div className="formContainer">
-        <div className="topForm">
-          <h2 className="formHeader">Login</h2>
+    <Container maxWidth="xs">
+      <CssBaseline />
+      <Grid>
+        <Typography align="center" color="primary" component="h1" variant="h5">
+          Login
+        </Typography>
+      </Grid>
+      <form
+        className={classes.form}
+        onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="useremail"></label>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            label="Email Address"
+            autoComplete="email"
+            autoFocus
+            name="useremail"
+            type="email" />
         </div>
-        <div className="middleForm">
+        <div>
+          <label htmlFor="password"></label>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            label="Password"
+            autoComplete="current-password"
+            name="password"
+            type="password" />
         </div>
-        <div className="bottomForm">
-          <form
-            className="loginForm"
-            onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="email"></label>
-              <input
-                placeholder="Your email" required
-                name="useremail"
-                type="email" />
-            </div>
-            <div>
-              <label htmlFor="password"></label>
-              <input
-                placeholder="Password" required
-                name="password"
-                type="password" />
-            </div>
-            <div className="errorMsg">
-              {invalid ? 'try again' : null}
-            </div>
-            <div className="loginButtons">
-              <button className="loginButton">Login</button>
-            </div>
-          </form>
+        <div className="errorMsg">
+          {invalid ? 'try again' : null}
         </div>
-      </div>
-    </>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          className={classes.submit}>Login</Button>
+      </form>
+    </Container>
   );
 };
 

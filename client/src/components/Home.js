@@ -2,11 +2,27 @@ import React,
 {
   useState,
 } from 'react';
-// import './Home.css';
+import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
 import Register from './Register';
 import Login from './Login';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(10),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+}))
 
 const Home = (props) => {
+
+  const classes = useStyles();
 
   const [login, selectLogin] = useState(true);
 
@@ -20,27 +36,34 @@ const Home = (props) => {
     console.log(e.target.textContent)
     selectLogin(!login);
     let q = document.querySelector('.question');
-    if (e.target.textContent === 'Login') {
-      e.target.textContent = 'Register';
-      q.textContent = 'Need an account?'
+    if (e.target.textContent === 'Need an account? Register') {
+      q.textContent = 'Have an account? Login'
     } else {
-      e.target.textContent = 'Login';
-      q.textContent = 'Have an account?'
+      q.textContent = 'Need an account? Register'
     }
   }
 
   return (
-    <div className="home">
-      {login ?
+    <Container className={classes.paper} maxWidth="xs">
+      <CssBaseline />
+      {!login ?
         <Register handleLogin={handleLogin} />
         : <Login handleLogin={handleLogin} />}
-      <div className="helpMsgBtn">
-        <p className="question">Have an account?</p>
-        <button
-          className='homeBtn'
-          onClick={showOptions}>Login</button>
-      </div>
-    </div>
+      <Box
+        mt={2}>
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          align="center">
+          <Link
+            component="button"
+            variant="body2"
+            underline="hover"
+            className="question"
+            onClick={showOptions}>Need an account? Register</Link>
+        </Typography>
+      </Box>
+    </Container>
   );
 }
 

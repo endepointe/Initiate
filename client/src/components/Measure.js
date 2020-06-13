@@ -1,11 +1,61 @@
-//import './Measure.css';
 import React, {
   useEffect,
   useState
 } from 'react';
 import axios from 'axios';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import { makeStyles } from '@material-ui/core/styles';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import Button from '@material-ui/core/Button';
+
+const useStyles = makeStyles((theme) => ({
+  voteForm: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  card: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  measureInfo: {
+  },
+  title: {
+
+  },
+  desc: {
+
+  },
+  votingArea: {
+    marginBottom: '1rem',
+  },
+  bottomInfo: {
+    justifySelf: 'flex-end',
+    marginTop: '1.2rem',
+  },
+  radios: {
+    flex: 2,
+  },
+  castVote: {
+    flex: 1,
+    fontWeight: 400,
+    color: 'white',
+    '&:hover': {
+      color: 'white',
+      fontWeight: 600,
+      backgroundColor: 'rgb(37, 87, 196, 0.9)',
+    },
+  }
+}))
 
 const Measure = (props) => {
+
+  const classes = useStyles();
 
   const currDate = new Date().getTime();
   const endDate = new Date(props.data.endDate).getTime();
@@ -95,54 +145,64 @@ const Measure = (props) => {
   }
 
   return (
-    <div className="measure">
-      <div className="sideTop">
-        <div className="sideLeft">
-          <h3 className="measureText">{props.title}</h3>
-          <p className="measureText">{props.desc}</p>
-        </div>
-        <div className="sideRight">
+    <Grid item xs={12} sm={6} md={4}>
+      <Card className={classes.card}>
+        <CardContent
+          className={classes.measureInfo}>
+          <h3 className={classes.title}>{props.title}</h3>
+          <p className={classes.desc}>{props.desc}</p>
+        </CardContent>
+        <div className={classes.votingArea}>
           {votingOver || userHasVoted || voting ? '' :
-            <form onSubmit={castVote} className="measureButtons">
-              <div className="voteChoice">
-                <input name="choice" type="radio" value="yes" id="yes" className="voteButton" />
-                <label htmlFor="yes" className="voteLabel">Yay</label>
-              </div>
-              <div className="voteChoice">
-                <input name="choice" type="radio" value="no" id="no" className="voteButton" />
-                <label htmlFor="no" className="voteLabel">Nay</label>
-              </div>
-              <button className="castButton">Cast Vote</button>
+            <form onSubmit={castVote} className={classes.voteForm}>
+              <RadioGroup className={classes.radios}>
+                <div className="voteChoice">
+                  <Radio name="choice" value="yes" id="yes" />
+                  <label htmlFor="yes">Yay</label>
+                </div>
+                <div className="voteChoice">
+                  <Radio name="choice" value="no" id="no" />
+                  <label htmlFor="no" className="voteLabel">Nay</label>
+                </div>
+              </RadioGroup>
+              <Button
+                type="submit"
+                color='primary'
+                fullWidth
+                variant="contained"
+                className={classes.castVote}>Cast Vote</Button>
             </form>
           }
-        </div>
-      </div>
 
-      <div className="sideBottom">
-        {votingOver ? <div>
-          <p>The voting period for this measure has ended</p>
-          <p>Expired on: {fulldate}</p>
-          <p>Votes in favor: {props.yeses}</p>
-          <p>Votes against: {props.nos}</p>
-        </div> :
-          userHasVoted ?
-            <div className="midBottom">
-              <p className="timer">Time left: {retTime((endDate - counter) / 864)}</p>
-              <p className="result">Votes in favor: {props.yeses}</p>
-              <p className="result">Votes against: {props.nos}</p>
-            </div> :
-            voting ?
-              <div className="midBottom">
-                <p className="timer">Time left: {retTime((endDate - counter) / 864)}</p>
-                <p className="result">Votes in favor: {yays}</p>
-                <p className="result">Votes against: {nays}</p>
-              </div> :
-              <div className="midBottom">
-                <p className="timer">Time left: {retTime((endDate - counter) / 864)}</p>
-                <p className="result">Cast your vote to see the results</p>
-              </div>}
-      </div>
-    </div>
+
+          <div className={classes.bottomInfo}>
+            {votingOver ?
+              <CardContent>
+                <p>The voting period for this measure has ended</p>
+                <p>Expired on: {fulldate}</p>
+                <p>Votes in favor: {props.yeses}</p>
+                <p>Votes against: {props.nos}</p>
+              </CardContent> :
+              userHasVoted ?
+                <CardContent>
+                  <p>Time left: {retTime((endDate - counter) / 864)}</p>
+                  <p>Votes in favor: {props.yeses}</p>
+                  <p>Votes against: {props.nos}</p>
+                </CardContent> :
+                voting ?
+                  <CardContent>
+                    <p>Time left: {retTime((endDate - counter) / 864)}</p>
+                    <p>Votes in favor: {yays}</p>
+                    <p>Votes against: {nays}</p>
+                  </CardContent> :
+                  <CardContent>
+                    <p>Time left: {retTime((endDate - counter) / 864)}</p>
+                    <p>Cast your vote to see the results</p>
+                  </CardContent>}
+          </div>
+        </div>
+      </Card>
+    </Grid>
   );
 }
 

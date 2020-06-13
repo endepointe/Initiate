@@ -7,10 +7,9 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
-import { Container } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
 import VotingPage from './components/VotingPage';
 import Home from './components/Home';
-//import './App.css';
 
 const App = () => {
 
@@ -20,17 +19,9 @@ const App = () => {
   const [id, setId] = useState('');
 
   useEffect(() => {
-    console.log(`auth stat: ${authStatus}`);
   }, [authStatus]);
 
   const handleAuth = (id, user, token, status) => {
-    console.log(`
-    From App {\n
-        Id: ${id}
-        User: ${user}\n  
-        Token: ${token}\n  
-        Status: ${status}\n
-    }`);
     setId(id);
     setUser(user);
     setAuthStatus(status);
@@ -38,7 +29,7 @@ const App = () => {
   }
 
   return (
-    <div className="backDrop">
+    <Box width={1}>
       <Switch>
         <Route
           exact
@@ -62,7 +53,7 @@ const App = () => {
           )}>
         </Route>
       </Switch>
-    </div>
+    </Box>
   );
 }
 

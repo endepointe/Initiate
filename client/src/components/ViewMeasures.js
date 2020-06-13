@@ -6,25 +6,41 @@ import React,
 } from 'react';
 import Measure from './Measure';
 import axios from 'axios';
+import Container from '@material-ui/core/Container';
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+
+const useStyles = makeStyles((theme) => ({
+  cardGrid: {
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(8),
+  },
+}));
 
 const ViewMeasures = (props) => {
 
+  const classes = useStyles();
+
   const [measures, setMeasures] = useState([]);
+
   useEffect(() => {
     axios.get('/api/vote/view-measures')
       .then((response) => {
-        console.log("Printing out information: " + response.data[0].name);
-        let currentMeasures = [];
-        for (let i = response.data.length - 1; i >= 0; --i) {
-          currentMeasures.push(response.data[i]);
+        try {
+          let currentMeasures = [];
+          for (let i = response.data.length - 1; i >= 0; --i) {
+            currentMeasures.push(response.data[i]);
+          }
+          setMeasures(currentMeasures);
+        } catch (err) {
+          console.log(err)
         }
-        setMeasures(currentMeasures);
       });
   }, []);
 
   return (
-    <div className="viewMeasures">
-      <div className="measures">
+    <Container className={classes.cardGrid} maxWidth="md">
+      <Grid container spacing={4}>
         {measures.map((measure, i) => {
           return <Measure
             {...props}
@@ -37,8 +53,8 @@ const ViewMeasures = (props) => {
             nos={measure.votes.no}
           />
         })}
-      </div>
-    </div>
+      </Grid>
+    </Container>
   )
 }
 
