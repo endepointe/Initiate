@@ -3,7 +3,7 @@ const cors = require('cors');
 const app = express();
 const mongoose = require('mongoose');
 const path = require('path');
-const port = process.env.port || 4001;
+const port = 4001 || process.env.port;
 const auth = require('./routes/auth');
 // voting route
 const voteRoute = require('./routes/vote');
