@@ -11,6 +11,11 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
+const corseOptions = {
+  origin: 'https://endepointe.com',
+  status: 200
+}
+
 // connect db
 mongoose.connect(process.env.DB_CONNECT,
   {
@@ -20,7 +25,7 @@ mongoose.connect(process.env.DB_CONNECT,
   () => console.log('connected to mongoose'),
 );
 
-app.use(cors());
+app.use(cors(corseOptions));
 app.use(express.json());
 
 // middelware
