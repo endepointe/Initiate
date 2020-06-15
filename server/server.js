@@ -12,8 +12,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const corseOptions = {
-  origin: 'https://endepointe.com',
-  status: 200
+  origin: 'http://localhost:4001',
 }
 
 // connect db
