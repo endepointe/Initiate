@@ -12,7 +12,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const corseOptions = {
-  origin: 'http://localhost:4001',
+  origin: '/',
 }
 
 // connect db
