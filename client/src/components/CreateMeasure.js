@@ -40,7 +40,6 @@ const CreateMeasure = (props) => {
     console.log(`id in create: ${props.userId}`);
 
     const tokenReq = axios.create({
-      // baseURL: 'http://localhost:4001/',
       headers: {
         'auth-token': props.token,
       },
