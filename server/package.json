@@ -1,11 +1,11 @@
 {
-  "name": "server",
+  "name": "vote",
   "version": "1.0.0",
   "description": "group 5 server",
-  "main": "server.js",
+  "main": "vote.js",
   "scripts": {
     "client": "cd ../client && npm start",
-    "server": "nodemon server",
+    "server": "nodemon vote",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "",
