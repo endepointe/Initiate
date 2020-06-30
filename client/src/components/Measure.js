@@ -3,6 +3,7 @@ import React, {
   useState
 } from 'react';
 import axios from 'axios';
+import moment from 'moment';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -55,80 +56,45 @@ const useStyles = makeStyles((theme) => ({
 const Measure = (props) => {
 
   const classes = useStyles();
+  // .format('MMMM Do YYYY, h:mm:ss a');
+  const endDate = moment(props.data.endDate)
+  const startDate = moment(props.data.startDate);
+  const currDate = moment();
+  const timePeriod = endDate.diff(startDate, 'minutes');
+  const totalHours = parseFloat(timePeriod / 60).toFixed(2);
+  const timeLeft = endDate.diff(currDate, 'minutes');
+  let timeLeftHours = parseFloat(timeLeft / 60).toFixed(2);
 
-  const currDate = new Date().getTime();
-  const endDate = new Date(props.data.endDate).getTime();
-  const [counter, setCounter] = useState(currDate);
+  const [counter, setCounter] = useState(timePeriod);
   const [votingOver, endVoting] = useState(false);
   const [yays, setYays] = useState(props.yeses);
   const [nays, setNays] = useState(props.nos);
-  const myDate = new Date(props.data.endDate);
-  var m = myDate.getMonth();
-  var d = myDate.getDay();
-  var y = myDate.getFullYear();
-  var h = myDate.getUTCHours();
-  var mi = myDate.getMinutes();
 
-  h = h % 12;
-  if (h === 0) {
-    h = 12;
-  }
-
-  if (mi < 10) {
-    mi = "0" + mi;
-  }
-
-  const getDayTime = (hour) => {
-    if (hour > 12) {
-      return "PM";
-    }
-    else {
-      return "AM";
-    }
-  }
-
-  var fulldate = m + '/' + d + "/" + y + "  " + h + ":" + mi + " " + getDayTime(h)
-
-  var userHasVoted = props.data.voters.includes(props.userId);
+  let userHasVoted = props.data.voters.includes(props.userId);
   const [voting, checkVote] = useState(false)
   const measureId = props.data._id;
 
   useEffect(() => {
-    let time = setInterval(() => setCounter(currDate + 1000), 1000);
+    let time = setInterval(() => setCounter(counter - 60), 60000);
     if (currDate >= endDate) {
       endVoting(true);
     }
     return () => clearTimeout(time);
-  }, [currDate, endDate]);
-
-
-  const retTime = (seconds) => {
-    if (seconds > 60) {
-      if (seconds > 3600) {
-        return (Math.round(seconds / 3600) + " Hours");
-      }
-      else {
-        return (Math.round(seconds / 60) + " Minutes");
-      }
-    }
-    else {
-      return (Math.round(seconds) + " Seconds");
-    }
-  }
+  }, [currDate, endDate, counter]);
 
   const castVote = (e) => {
     e.preventDefault();
-    console.log(e.target.elements.choice.value);
+    //console.log(e.target.elements.choice.value);
 
     if (e.target.elements.choice.value !== '') {
-      console.log('choice is not null');
+      // console.log('choice is not null');
       axios.post('/api/vote/cast-vote', ({
         decision: e.target.elements.choice.value,
         userId: props.userId,
         measureId: measureId
       })
       ).then((response) => {
-        console.log(response);
+        //  console.log(response);
       });
       checkVote(true);
       if (e.target.elements.choice.value === "yes") {
@@ -139,7 +105,7 @@ const Measure = (props) => {
       }
     }
     else {
-      console.log('choice is null');
+      //console.log('choice is null');
     }
   }
 
@@ -172,30 +138,28 @@ const Measure = (props) => {
                 className={classes.castVote}>Cast Vote</Button>
             </form>
           }
-
-
           <div className={classes.bottomInfo}>
             {votingOver ?
               <CardContent>
                 <p>The voting period for this measure has ended</p>
-                <p>Expired on: {fulldate}</p>
+                <p>Expired on: {endDate.format('MMMM Do YYYY, h:mm:ss a')}</p>
                 <p>Votes in favor: {props.yeses}</p>
                 <p>Votes against: {props.nos}</p>
               </CardContent> :
               userHasVoted ?
                 <CardContent>
-                  <p>Time left: {retTime((endDate - counter) / 864)}</p>
+                  <p>Time left: {timeLeftHours} hours</p>
                   <p>Votes in favor: {props.yeses}</p>
                   <p>Votes against: {props.nos}</p>
                 </CardContent> :
                 voting ?
                   <CardContent>
-                    <p>Time left: {retTime((endDate - counter) / 864)}</p>
+                    <p>Time left: {timeLeftHours} hours</p>
                     <p>Votes in favor: {yays}</p>
                     <p>Votes against: {nays}</p>
                   </CardContent> :
                   <CardContent>
-                    <p>Time left: {retTime((endDate - counter) / 864)}</p>
+                    <p>Time left: {timeLeftHours} hours</p>
                     <p>Cast your vote to see the results</p>
                   </CardContent>}
           </div>
